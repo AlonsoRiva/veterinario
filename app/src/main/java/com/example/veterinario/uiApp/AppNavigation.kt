@@ -2,7 +2,6 @@ package com.example.veterinario.uiApp
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
-// ------------------------------------------
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -17,7 +16,7 @@ fun AppNavigation(viewModel: AnimalViewModel) {
 
     NavHost(navController = navController, startDestination = "lista_animales") {
 
-        // Ruta 1: Pantalla de Lista
+        //Pantalla de Lista
         composable(
             route = "lista_animales",
             // Define animaciones de entrada y salida
@@ -39,17 +38,17 @@ fun AppNavigation(viewModel: AnimalViewModel) {
             )
         }
 
-        // Ruta 2: Pantalla de Formulario
+        //Pantalla de Formulario
         composable(
             route = "formulario",
-            // Define animaciones (esta entra desde la izquierda)
+            //animaciones de entrada y salida
             enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500))
             },
             exitTransition = {
                 slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500))
             },
-            // Animaciones para "volver" (pop)
+            // Animaciones para volver
             popEnterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500))
             },
@@ -67,7 +66,6 @@ fun AppNavigation(viewModel: AnimalViewModel) {
         composable(
             route = "detalle_animal/{animalId}",
             arguments = listOf(navArgument("animalId") { type = NavType.IntType }),
-            // Define animaciones (esta también entra desde la izquierda)
             enterTransition = {
                 slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500))
             },

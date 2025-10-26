@@ -15,12 +15,10 @@ import com.example.veterinario.viewmodel.AnimalViewModelFactory
 
 class MainActivity : ComponentActivity() {
 
-    // 1. MODIFICA LA CREACIÓN DEL VIEWMODEL
-    // Ahora le pasamos 'application' a la Factory
     private val viewModel: AnimalViewModel by viewModels {
         AnimalViewModelFactory(
             (application as MyApplication).repository,
-            application // <-- Pasa la 'application' aquí
+            application
         )
     }
 

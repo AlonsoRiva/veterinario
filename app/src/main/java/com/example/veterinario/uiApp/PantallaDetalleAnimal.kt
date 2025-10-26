@@ -56,8 +56,7 @@ fun PantallaDetalleAnimal(
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 Image(
-                    // 2. DILE A COIL QUE CARGUE LA IMAGEN DESDE UN ARCHIVO (FILE)
-                    // Esta es la ruta permanente que guardamos
+
                     painter = rememberAsyncImagePainter(File(it.fotoUri)),
                     contentDescription = it.nombre,
                     modifier = Modifier
@@ -73,7 +72,6 @@ fun PantallaDetalleAnimal(
 
                 Spacer(modifier = Modifier.weight(1f))
 
-                // --- RECURSO NATIVO 2: DIALER ---
                 Button(
                     onClick = {
                         val numeroRefugio = "+56912345678"

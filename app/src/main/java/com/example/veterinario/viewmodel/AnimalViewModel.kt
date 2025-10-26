@@ -15,7 +15,6 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 
-// 1. AÑADE 'application: Application' AL CONSTRUCTOR
 class AnimalViewModel(
     private val repository: AnimalRepository,
     private val application: Application // Necesario para guardar archivos
@@ -82,12 +81,9 @@ class AnimalViewModel(
         val archivoDestino = File(application.filesDir, nombreArchivo)
 
         try {
-            // Abre el stream de la URI temporal de la galería
             val inputStream = contentResolver.openInputStream(uri)
-            // Abre el stream a nuestro nuevo archivo
             val outputStream = FileOutputStream(archivoDestino)
 
-            // Copia los bytes de un archivo a otro
             inputStream?.copyTo(outputStream)
 
             // Cierra los streams
@@ -96,7 +92,6 @@ class AnimalViewModel(
 
         } catch (e: Exception) {
             e.printStackTrace()
-            // Si algo falla, devuelve la URI original (aunque podría fallar después)
             return uri.toString()
         }
         // Devuelve la RUTA ABSOLUTA de nuestro archivo copiado
@@ -107,10 +102,8 @@ class AnimalViewModel(
 
     // --- Acciones CRUD ---
     fun guardarAnimal(onGuardado: () -> Unit) {
-        // 3. ASEGÚRATE QUE FOTOURI NO SEA NULO
         if (validarCampos() && fotoUri != null) {
 
-            // 4. COPIA LA IMAGEN ANTES DE GUARDAR
             val rutaPermanente = guardarCopiaLocal(fotoUri!!)
 
             val animal = Animal(
@@ -118,7 +111,7 @@ class AnimalViewModel(
                 tipo = tipo,
                 edad = edad.toIntOrNull() ?: 0,
                 descripcion = descripcion,
-                fotoUri = rutaPermanente, // 5. GUARDA LA RUTA PERMANENTE
+                fotoUri = rutaPermanente,
                 adoptado = false
             )
             viewModelScope.launch {

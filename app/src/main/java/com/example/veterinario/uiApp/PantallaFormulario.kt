@@ -24,7 +24,6 @@ fun PantallaFormulario(
     viewModel: AnimalViewModel,
     onNavigateBack: () -> Unit
 ) {
-    // --- RECURSO NATIVO 1: GALERÍA (IL 2.4.1) ---
     val lanzadorGaleria = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri: Uri? ->
@@ -53,7 +52,7 @@ fun PantallaFormulario(
             verticalArrangement = Arrangement.spacedBy(16.dp)
         ) {
 
-            // --- Formulario con Validaciones (IL 2.1.2) ---
+            //Formulario con Validaciones
             CampoTextoValidado(
                 valor = viewModel.nombre,
                 onValueChange = { viewModel.onNombreChange(it) },
@@ -126,7 +125,7 @@ fun PantallaFormulario(
     }
 }
 
-// Composable reutilizable para campos validados
+//Aqui se validan los campos
 @Composable
 fun CampoTextoValidado(
     valor: String,
