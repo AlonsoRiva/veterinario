@@ -1,5 +1,8 @@
 package com.example.veterinario.uiApp
 
+import androidx.compose.animation.AnimatedContentTransitionScope
+import androidx.compose.animation.core.tween
+// ------------------------------------------
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -15,7 +18,16 @@ fun AppNavigation(viewModel: AnimalViewModel) {
     NavHost(navController = navController, startDestination = "lista_animales") {
 
         // Ruta 1: Pantalla de Lista
-        composable("lista_animales") {
+        composable(
+            route = "lista_animales",
+            // Define animaciones de entrada y salida
+            enterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500))
+            },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500))
+            }
+        ) {
             PantallaListaAnimales(
                 viewModel = viewModel,
                 onAnimalClick = { animalId ->
@@ -28,7 +40,23 @@ fun AppNavigation(viewModel: AnimalViewModel) {
         }
 
         // Ruta 2: Pantalla de Formulario
-        composable("formulario") {
+        composable(
+            route = "formulario",
+            // Define animaciones (esta entra desde la izquierda)
+            enterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500))
+            },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500))
+            },
+            // Animaciones para "volver" (pop)
+            popEnterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500))
+            },
+            popExitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500))
+            }
+        ) {
             PantallaFormulario(
                 viewModel = viewModel,
                 onNavigateBack = { navController.popBackStack() }
@@ -38,7 +66,20 @@ fun AppNavigation(viewModel: AnimalViewModel) {
         // Ruta 3: Pantalla de Detalle
         composable(
             route = "detalle_animal/{animalId}",
-            arguments = listOf(navArgument("animalId") { type = NavType.IntType })
+            arguments = listOf(navArgument("animalId") { type = NavType.IntType }),
+            // Define animaciones (esta también entra desde la izquierda)
+            enterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500))
+            },
+            exitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500))
+            },
+            popEnterTransition = {
+                slideIntoContainer(AnimatedContentTransitionScope.SlideDirection.Right, tween(500))
+            },
+            popExitTransition = {
+                slideOutOfContainer(AnimatedContentTransitionScope.SlideDirection.Left, tween(500))
+            }
         ) { backStackEntry ->
             val animalId = backStackEntry.arguments?.getInt("animalId") ?: 0
             PantallaDetalleAnimal(
@@ -49,4 +90,3 @@ fun AppNavigation(viewModel: AnimalViewModel) {
         }
     }
 }
-
